@@ -34,6 +34,7 @@ async function saveProfile() {
   const first_name = document.getElementById('firstName').value.trim();
   const last_name  = document.getElementById('lastName').value.trim();
   const email      = document.getElementById('profileEmail').value.trim();
+  const preview    = document.getElementById("avatarInput").value.trim();
 
   if (!first_name || !last_name || !email) {
     showAlert('profileAlert', 'All profile fields are required.'); return;

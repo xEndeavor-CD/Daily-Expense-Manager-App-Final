@@ -92,7 +92,7 @@ function buildPie(cats) {
   const vals   = cats.map(c => parseFloat(c.total));
   const colors = cats.map((c, i) => c.color || COLORS[i % COLORS.length]);
 
-  pieChart = new Chart(ctx, {
+  pieChart  = new Chart(ctx, {
     type: 'pie',
     data: {
       labels,

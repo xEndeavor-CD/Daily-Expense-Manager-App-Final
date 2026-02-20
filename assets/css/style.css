@@ -568,7 +568,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
 }
 .pd-logout-wrap button.logoutButton .button-text {
   color: var(--danger);
-  margin-left: 0;
+  margin-left:0;
   margin-right: 0;
 }
 .pd-logout-wrap button.logoutButton:hover {
