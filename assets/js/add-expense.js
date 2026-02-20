@@ -1,19 +1,19 @@
 // assets/js/add-expense.js
+// showAlert() is already in api.js — do NOT redefine it here
 
 async function initAddExpense() {
-  // Default date = today, max = today
   const today = new Date().toISOString().split('T')[0];
   const inp   = document.getElementById('expDate');
   inp.value   = today;
   inp.max     = today;
 
-  // Load categories into dropdown
   const res = await API.getCategories();
   if (res.success && res.data) {
     const sel = document.getElementById('category');
     res.data.forEach(c => {
-      const o = document.createElement('option');
-      o.value = c.id; o.textContent = c.name;
+      const o       = document.createElement('option');
+      o.value       = c.id;
+      o.textContent = c.name;
       sel.appendChild(o);
     });
   }
@@ -50,7 +50,9 @@ function clearForm() {
   document.getElementById('category').value    = '';
   document.getElementById('description').value = '';
   document.getElementById('expDate').value     = new Date().toISOString().split('T')[0];
+
+  const el = document.getElementById('formAlert');
+  if (el) el.classList.add('d-none');
 }
 
-// Boot
-initAddExpense();
+document.addEventListener('DOMContentLoaded', initAddExpense);
