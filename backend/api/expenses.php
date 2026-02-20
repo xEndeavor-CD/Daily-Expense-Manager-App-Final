@@ -11,18 +11,25 @@ $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 
 try {
-switch ($method) {
-    case 'GET':
-        if      ($action === 'summary') getSummary();
-        elseif  ($action === 'recent')  getRecentExpenses();
-        elseif  ($action === 'search')  searchExpenses();
-        else                            getExpenses();
-        break;
-    case 'POST':   addExpense();    break;
-    case 'PUT':    updateExpense(); break;
-    case 'DELETE': deleteExpense(); break;
-    default:
-        echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    switch ($method) {
+        case 'GET':
+            if      ($action === 'summary') getSummary();
+            elseif  ($action === 'recent')  getRecentExpenses();
+            elseif  ($action === 'search')  searchExpenses();
+            else                            getExpenses();
+            break;
+        case 'POST':   addExpense();    break;
+        case 'PUT':    updateExpense(); break;
+        case 'DELETE': deleteExpense(); break;
+        default:
+            echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    }
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Server error: ' . $e->getMessage()
+    ]);
 }
 
 // ── GET ALL ──────────────────────────────────────────────────
@@ -175,7 +182,8 @@ function addExpense() {
     $description = trim(   $data['description']  ?? '');
 
     if ($amount <= 0 || !$category_id || !$date) {
-        echo json_encode(['success' => false, 'message' => 'Amount, category and date are required']); return;
+        echo json_encode(['success' => false, 'message' => 'Amount, category and date are required']);
+        return;
     }
 
     $conn = getDBConnection();
@@ -203,7 +211,8 @@ function updateExpense() {
     $description = trim(   $data['description']  ?? '');
 
     if ($amount <= 0 || !$category_id || !$date) {
-        echo json_encode(['success' => false, 'message' => 'Amount, category and date are required']); return;
+        echo json_encode(['success' => false, 'message' => 'Amount, category and date are required']);
+        return;
     }
 
     $conn = getDBConnection();
@@ -234,12 +243,4 @@ function deleteExpense() {
         echo json_encode(['success' => false, 'message' => 'Delete failed or not found']);
     }
     $stmt->close(); $conn->close();
-}
-
-} catch (Throwable $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Server error: ' . $e->getMessage()
-    ]);
 }
