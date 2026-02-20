@@ -7,10 +7,152 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
   <link rel="stylesheet" href="../assets/css/style.css"/>
+
+  <style>
+    .ae-layout {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .ae-card {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 36px 30px;
+      min-width: 0;
+    }
+
+    .ae-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--txt-main);
+      margin-bottom: 24px;
+    }
+
+    .ae-card .form-control,
+    .ae-card .form-select {
+      border: 1px solid #e2e8f0 !important;
+      background: #fff !important;
+      border-radius: 10px !important;
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      color: var(--txt-main);
+      box-shadow: none !important;
+      transition: border-color .18s;
+    }
+    .ae-card .form-control:focus,
+    .ae-card .form-select:focus {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1) !important;
+    }
+    .ae-card .form-control::placeholder { color: #94a3b8; }
+
+    .amount-wrap { position: relative; }
+    .amount-wrap .dollar-sign {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--txt-muted);
+      font-size: .95rem;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .amount-wrap .form-control { padding-left: 30px !important; }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: .45;
+      cursor: pointer;
+    }
+
+    .ae-card .form-label {
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--txt-main);
+      margin-bottom: 7px;
+    }
+
+    .btn-save {
+      background: linear-gradient(135deg, #2563eb 0%, #1a4fd6 100%);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: .95rem;
+      border-radius: 12px;
+      padding: 13px 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: 0 4px 16px rgba(37,99,235,.35);
+      transition: opacity .18s, transform .12s, box-shadow .18s;
+      cursor: pointer;
+    }
+    .btn-save:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37,99,235,.45);
+      color: #fff;
+    }
+    .btn-save:active { transform: translateY(0); }
+
+    .btn-cancel {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      color: var(--txt-main);
+      font-weight: 600;
+      font-size: .95rem;
+      border-radius: 12px;
+      padding: 13px 28px;
+      transition: background .15s, border-color .15s;
+      cursor: pointer;
+    }
+    .btn-cancel:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .ae-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .ae-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 14px rgba(37,99,235,.32);
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s, background .15s;
+      text-decoration: none;
+    }
+    .ae-badge:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37,99,235,.45);
+      background: #1d4ed8;
+      color: #fff;
+    }
+
+    @media (max-width: 640px) {
+      .ae-layout { flex-direction: column; }
+      .ae-badges { flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+    }
+  </style>
 </head>
 <body class="app-bg">
-
 <div class="app-layout">
+
   <aside class="sidebar">
     <div class="sidebar-brand">
       <div class="sb-icon"><i class="bi bi-wallet2"></i></div>
@@ -41,45 +183,74 @@
     </div>
 
     <div class="content-pad">
-      <div class="card-panel" style="max-width:700px;">
-        <h6 class="panel-title mb-4">Expense Details</h6>
+      <div class="ae-layout">
 
-        <div id="formAlert" class="alert d-none" role="alert"></div>
+        <div class="ae-card">
+          <div class="ae-card-title">Expense Details</div>
 
-        <div class="row g-3 mb-3">
-          <div class="col-md-6">
-            <label class="form-label fw-medium">Amount ($)</label>
-            <input type="number" id="amount" class="form-control bg-light border-0 rounded-3"
-                   placeholder="0.00" min="0.01" step="0.01"/>
+          <div id="formAlert" class="alert d-none mb-4" role="alert"></div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <label class="form-label">Amount ($)</label>
+              <div class="amount-wrap">
+                <span class="dollar-sign">$</span>
+                <input type="number" id="amount" class="form-control"
+                       placeholder="0.00" min="0.01" step="0.01"/>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label">Category</label>
+              <select id="category" class="form-select">
+                <option value="">Select category</option>
+              </select>
+            </div>
           </div>
-          <div class="col-md-6">
-            <label class="form-label fw-medium">Category</label>
-            <select id="category" class="form-select bg-light border-0 rounded-3">
-              <option value="">Select category</option>
-            </select>
+
+          <div class="mb-3">
+            <label class="form-label">Date</label>
+            <input type="date" id="expDate" class="form-control"/>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Description</label>
+            <textarea id="description" class="form-control" rows="4"
+                      placeholder="Enter expense description..."></textarea>
+          </div>
+
+          <div class="d-flex gap-3 flex-wrap">
+            <button class="btn-save" onclick="saveExpense()">
+              <i class="bi bi-floppy2-fill"></i>
+              Save Expense
+            </button>
+            <button class="btn-cancel" onclick="clearForm()">
+              Cancel
+            </button>
           </div>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-medium">Date</label>
-          <input type="date" id="expDate" class="form-control bg-light border-0 rounded-3"/>
+        <div class="ae-badges">
+          <a class="ae-badge" href="dashboard.html"    title="Dashboard">
+            <i class="bi bi-eye-fill"></i>
+          </a>
+          <a class="ae-badge" href="expense-list.html" title="Expense List">
+            <i class="bi bi-box-fill"></i>
+          </a>
+          <a class="ae-badge" href="reports.html"      title="Reports">
+            <i class="bi bi-briefcase-fill"></i>
+          </a>
+          <a class="ae-badge" href="settings.html"     title="Budget / Settings">
+            <i class="bi bi-currency-dollar"></i>
+          </a>
+          <a class="ae-badge" href="expense-list.html" title="Export">
+            <i class="bi bi-archive-fill"></i>
+          </a>
         </div>
 
-        <div class="mb-4">
-          <label class="form-label fw-medium">Description</label>
-          <textarea id="description" class="form-control bg-light border-0 rounded-3" rows="3"
-                    placeholder="Enter expense description…"></textarea>
-        </div>
-
-        <div class="d-flex gap-3">
-          <button class="btn btn-dark btn-lg flex-grow-1 rounded-3 fw-semibold"
-                  onclick="saveExpense()">Save Expense</button>
-          <button class="btn btn-outline-secondary btn-lg rounded-3"
-                  onclick="clearForm()">Cancel</button>
-        </div>
       </div>
     </div>
   </main>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
