@@ -14,7 +14,22 @@ async function loadProfile() {
     document.getElementById('profileEmail').value = r.data.email      || '';
   }
 }
-
+function previewAvatar(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const preview = document.getElementById('avatarPreview');
+      preview.innerHTML = `<img src="${ev.target.result}" alt="Profile"/>`;
+    };
+    reader.readAsDataURL(file);
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
 async function saveProfile() {
   const first_name = document.getElementById('firstName').value.trim();
   const last_name  = document.getElementById('lastName').value.trim();
