@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dashboard – ExpenseTracker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <link rel="stylesheet" href="../assets/css/logout-button.css"/>
+</head>
+<body class="app-bg">
+
+<div class="app-layout">
+
+  <!-- ── SIDEBAR ─────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sb-icon"><i class="bi bi-wallet2"></i></div>
+      <div>
+        <div class="sb-name">ExpenseTracker</div>
+        <div class="sb-sub">Manage your expenses</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"    class="nav-item active"><i class="bi bi-grid-1x2"></i>Dashboard</a>
+      <a href="add-expense.html"  class="nav-item"><i class="bi bi-plus-circle"></i>Add Expense</a>
+      <a href="expense-list.html" class="nav-item"><i class="bi bi-list-ul"></i>Expense List</a>
+      <a href="reports.html"      class="nav-item"><i class="bi bi-bar-chart-line"></i>Reports</a>
+      <a href="settings.html"     class="nav-item"><i class="bi bi-gear"></i>Settings</a>
+    </nav>
+
+    <div class="sidebar-footer" style="display:flex;flex-direction:column;align-items:center;">
+      <button id="logoutBtn" class="logoutButton nav-item logout-item" title="Log Out">
+        <svg class="doorway" viewBox="0 0 100 100">
+          <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z"/>
+          <path class="bang" d="M40.5 43.7L26.6 31.4l-2.5 6.7zM41.9 50.4l-19.5-4-1.4 6.3zM40 57.4l-17.7 3.9 3.9 5.7z"/>
+        </svg>
+        <svg class="figure" viewBox="0 0 100 100">
+          <circle cx="52.1" cy="32.4" r="6.4"/>
+          <path d="M50.7 62.8c-1.2 2.5-3.6 5-7.2 4-3.2-.9-4.9-3.5-4-7.8.7-3.4 3.1-13.8 4.1-15.8 1.7-3.4 1.6-4.6 7-3.7 4.3.7 4.6 2.5 4.3 5.4-.4 3.7-2.8 15.1-4.2 17.9z"/>
+          <g class="arm1">
+            <path d="M55.5 56.5l-6-9.5c-1-1.5-.6-3.5.9-4.4 1.5-1 3.7-1.1 4.6.4l6.1 10c1 1.5.3 3.5-1.1 4.4-1.5.9-3.5.5-4.5-.9z"/>
+            <path class="wrist1" d="M69.4 59.9L58.1 58c-1.7-.3-2.9-1.9-2.6-3.7.3-1.7 1.9-2.9 3.7-2.6l11.4 1.9c1.7.3 2.9 1.9 2.6 3.7-.4 1.7-2 2.9-3.8 2.6z"/>
+          </g>
+          <g class="arm2">
+            <path d="M34.2 43.6L45 40.3c1.7-.6 3.5.3 4 2 .6 1.7-.3 4-2 4.5l-10.8 2.8c-1.7.6-3.5-.3-4-2-.6-1.6.3-3.4 2-4z"/>
+            <path class="wrist2" d="M27.1 56.2L32 45.7c.7-1.6 2.6-2.3 4.2-1.6 1.6.7 2.3 2.6 1.6 4.2L33 58.8c-.7 1.6-2.6 2.3-4.2 1.6-1.7-.7-2.4-2.6-1.7-4.2z"/>
+          </g>
+          <g class="leg1">
+            <path d="M52.1 73.2s-7-5.7-7.9-6.5c-.9-.9-1.2-3.5-.1-4.9 1.1-1.4 3.8-1.9 5.2-.9l7.9 7c1.4 1.1 1.7 3.5.7 4.9-1.1 1.4-4.4 1.5-5.8.4z"/>
+            <path class="calf1" d="M52.6 84.4l-1-12.8c-.1-1.9 1.5-3.6 3.5-3.7 2-.1 3.7 1.4 3.8 3.4l1 12.8c.1 1.9-1.5 3.6-3.5 3.7-2 0-3.7-1.5-3.8-3.4z"/>
+          </g>
+          <g class="leg2">
+            <path d="M37.8 72.7s1.3-10.2 1.6-11.4 2.4-2.8 4.1-2.6c1.7.2 3.6 2.3 3.4 4l-1.8 11.1c-.2 1.7-1.7 3.3-3.4 3.1-1.8-.2-4.1-2.4-3.9-4.2z"/>
+            <path class="calf2" d="M29.5 82.3l9.6-10.9c1.3-1.4 3.6-1.5 5.1-.1 1.5 1.4.4 4.9-.9 6.3l-8.5 9.6c-1.3 1.4-3.6 1.5-5.1.1-1.4-1.3-1.5-3.5-.2-5z"/>
+          </g>
+        </svg>
+        <svg class="door" viewBox="0 0 100 100">
+          <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z"/>
+          <circle cx="66" cy="50" r="3.7"/>
+        </svg>
+        <span class="button-text">Log Out</span>
+      </button>
+      <div class="sb-copy">© 2026 ExpenseTracker</div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ───────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- ── PAGE HEADER (updated: flex with profile button on right) ── -->
+    <div class="page-header">
+      <div class="page-header-inner">
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-sub">Overview of your expenses</p>
+        </div>
+
+        <!-- ── PROFILE BUTTON + DROPDOWN ── -->
+        <div class="profile-wrap" id="profileWrap">
+          <button class="profile-btn" id="profileBtn" type="button" aria-expanded="false" aria-haspopup="true">
+            <div class="profile-avatar" id="profileAvatar">JD</div>
+            <span class="profile-name" id="profileName">John Doe</span>
+            <i class="bi bi-chevron-down profile-chevron" id="profileChevron"></i>
+          </button>
+
+          <!-- Dropdown panel — id="profileDropdown" matches profile-dropdown.js -->
+          <div class="profile-dropdown" id="profileDropdown" aria-hidden="true">
+
+            <!-- User info header -->
+            <div class="pd-header">
+              <div class="pd-avatar" id="pdAvatar">JD</div>
+              <div>
+                <div class="pd-name"  id="pdName">John Doe</div>
+                <div class="pd-email" id="pdEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="503a3f383e103528313d203c357e333f3d">[email&#160;protected]</a></div>
+              </div>
+            </div>
+
+            <div class="pd-divider"></div>
+
+            <!-- Edit Profile — highlighted, links to settings -->
+            <a href="settings.html" class="pd-item pd-item-edit">
+              <i class="bi bi-pencil-square"></i>Edit Profile
+            </a>
+
+            <div class="pd-divider"></div>
+
+            <a href="settings.html" class="pd-item">
+              <i class="bi bi-person-circle"></i>My Profile
+            </a>
+            <a href="settings.html" class="pd-item">
+              <i class="bi bi-gear"></i>Account Settings
+            </a>
+            <a href="settings.html" class="pd-item">
+              <i class="bi bi-credit-card"></i>Billing
+            </a>
+            <a href="#" class="pd-item">
+              <i class="bi bi-question-circle"></i>Help &amp; Support
+            </a>
+
+            <div class="pd-divider"></div>
+
+            <!-- Logout — id="dropdownLogout" matches profile-dropdown.js -->
+            <div class="pd-logout-wrap">
+              <button id="dropdownLogout" class="logoutButton" type="button" title="Log Out">
+                <svg class="doorway" viewBox="0 0 100 100">
+                  <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z"/>
+                  <path class="bang" d="M40.5 43.7L26.6 31.4l-2.5 6.7zM41.9 50.4l-19.5-4-1.4 6.3zM40 57.4l-17.7 3.9 3.9 5.7z"/>
+                </svg>
+                <svg class="figure" viewBox="0 0 100 100">
+                  <circle cx="52.1" cy="32.4" r="6.4"/>
+                  <path d="M50.7 62.8c-1.2 2.5-3.6 5-7.2 4-3.2-.9-4.9-3.5-4-7.8.7-3.4 3.1-13.8 4.1-15.8 1.7-3.4 1.6-4.6 7-3.7 4.3.7 4.6 2.5 4.3 5.4-.4 3.7-2.8 15.1-4.2 17.9z"/>
+                  <g class="arm1">
+                    <path d="M55.5 56.5l-6-9.5c-1-1.5-.6-3.5.9-4.4 1.5-1 3.7-1.1 4.6.4l6.1 10c1 1.5.3 3.5-1.1 4.4-1.5.9-3.5.5-4.5-.9z"/>
+                    <path class="wrist1" d="M69.4 59.9L58.1 58c-1.7-.3-2.9-1.9-2.6-3.7.3-1.7 1.9-2.9 3.7-2.6l11.4 1.9c1.7.3 2.9 1.9 2.6 3.7-.4 1.7-2 2.9-3.8 2.6z"/>
+                  </g>
+                  <g class="arm2">
+                    <path d="M34.2 43.6L45 40.3c1.7-.6 3.5.3 4 2 .6 1.7-.3 4-2 4.5l-10.8 2.8c-1.7.6-3.5-.3-4-2-.6-1.6.3-3.4 2-4z"/>
+                    <path class="wrist2" d="M27.1 56.2L32 45.7c.7-1.6 2.6-2.3 4.2-1.6 1.6.7 2.3 2.6 1.6 4.2L33 58.8c-.7 1.6-2.6 2.3-4.2 1.6-1.7-.7-2.4-2.6-1.7-4.2z"/>
+                  </g>
+                  <g class="leg1">
+                    <path d="M52.1 73.2s-7-5.7-7.9-6.5c-.9-.9-1.2-3.5-.1-4.9 1.1-1.4 3.8-1.9 5.2-.9l7.9 7c1.4 1.1 1.7 3.5.7 4.9-1.1 1.4-4.4 1.5-5.8.4z"/>
+                    <path class="calf1" d="M52.6 84.4l-1-12.8c-.1-1.9 1.5-3.6 3.5-3.7 2-.1 3.7 1.4 3.8 3.4l1 12.8c.1 1.9-1.5 3.6-3.5 3.7-2 0-3.7-1.5-3.8-3.4z"/>
+                  </g>
+                  <g class="leg2">
+                    <path d="M37.8 72.7s1.3-10.2 1.6-11.4 2.4-2.8 4.1-2.6c1.7.2 3.6 2.3 3.4 4l-1.8 11.1c-.2 1.7-1.7 3.3-3.4 3.1-1.8-.2-4.1-2.4-3.9-4.2z"/>
+                    <path class="calf2" d="M29.5 82.3l9.6-10.9c1.3-1.4 3.6-1.5 5.1-.1 1.5 1.4.4 4.9-.9 6.3l-8.5 9.6c-1.3 1.4-3.6 1.5-5.1.1-1.4-1.3-1.5-3.5-.2-5z"/>
+                  </g>
+                </svg>
+                <svg class="door" viewBox="0 0 100 100">
+                  <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z"/>
+                  <circle cx="66" cy="50" r="3.7"/>
+                </svg>
+                <span class="button-text">Logout</span>
+              </button>
+            </div>
+
+          </div><!-- /profile-dropdown -->
+        </div><!-- /profile-wrap -->
+      </div><!-- /page-header-inner -->
+    </div><!-- /page-header -->
+
+    <!-- ── CONTENT ── -->
+    <div class="content-pad">
+      <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-sm-6">
+          <div class="stat-card">
+            <div>
+              <div class="stat-lbl">Today's Expenses</div>
+              <div class="stat-val text-danger" id="todayTotal">—</div>
+            </div>
+            <div class="stat-ico bg-danger-subtle text-danger"><i class="bi bi-calendar3"></i></div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="stat-card">
+            <div>
+              <div class="stat-lbl">This Month</div>
+              <div class="stat-val text-danger" id="monthTotal">—</div>
+            </div>
+            <div class="stat-ico bg-danger-subtle text-danger"><i class="bi bi-graph-down-arrow"></i></div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="stat-card">
+            <div>
+              <div class="stat-lbl">Total Transactions</div>
+              <div class="stat-val" id="totalTx">—</div>
+            </div>
+            <div class="stat-ico bg-primary-subtle text-primary"><i class="bi bi-receipt-cutoff"></i></div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="stat-card">
+            <div>
+              <div class="stat-lbl">Average Expense</div>
+              <div class="stat-val" id="avgExpense">—</div>
+            </div>
+            <div class="stat-ico bg-primary-subtle text-primary"><i class="bi bi-currency-dollar"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="card-panel h-100">
+            <h6 class="panel-title mb-4">Expenses by Category</h6>
+            <div class="chart-wrap">
+              <canvas id="categoryChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card-panel h-100">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+              <div>
+                <h6 class="panel-title">Recent Transactions</h6>
+                <div style="font-size:.75rem;color:var(--txt-muted);margin-top:3px;" id="txLastUpdated">Loading…</div>
+              </div>
+              <a href="expense-list.html" style="font-size:.82rem;font-weight:600;color:#2563eb;text-decoration:none;white-space:nowrap;">View All</a>
+            </div>
+            <div id="recentList"><div class="text-muted text-center py-5">Loading…</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<!-- API must load before dashboard and profile scripts -->
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/dashboard.js"></script>
+<script src="../assets/js/profile-dropdown.js"></script>
+
+<!-- ── LOGOUT BUTTON ANIMATION (shared states, two button instances) ── -->
+<script>
+(function () {
+  var states = {
+    'default': {
+      '--figure-duration': '100', '--transform-figure': 'none',
+      '--walking-duration': '100',
+      '--transform-arm1': 'none', '--transform-wrist1': 'none',
+      '--transform-arm2': 'none', '--transform-wrist2': 'none',
+      '--transform-leg1': 'none', '--transform-calf1':  'none',
+      '--transform-leg2': 'none', '--transform-calf2':  'none'
+    },
+    'hover': {
+      '--figure-duration': '100', '--transform-figure': 'translateX(1.5px)',
+      '--walking-duration': '100',
+      '--transform-arm1': 'rotate(-5deg)',   '--transform-wrist1': 'rotate(-15deg)',
+      '--transform-arm2': 'rotate(5deg)',    '--transform-wrist2': 'rotate(6deg)',
+      '--transform-leg1': 'rotate(-10deg)',  '--transform-calf1':  'rotate(5deg)',
+      '--transform-leg2': 'rotate(20deg)',   '--transform-calf2':  'rotate(-20deg)'
+    },
+    'walking1': {
+      '--figure-duration': '300', '--transform-figure': 'translateX(11px)',
+      '--walking-duration': '300',
+      '--transform-arm1': 'translateX(-4px) translateY(-2px) rotate(120deg)',
+      '--transform-wrist1': 'rotate(-5deg)',
+      '--transform-arm2': 'translateX(4px) rotate(-110deg)',
+      '--transform-wrist2': 'rotate(-5deg)',
+      '--transform-leg1': 'translateX(-3px) rotate(80deg)',
+      '--transform-calf1': 'rotate(-30deg)',
+      '--transform-leg2': 'translateX(4px) rotate(-60deg)',
+      '--transform-calf2': 'rotate(20deg)'
+    },
+    'walking2': {
+      '--figure-duration': '400', '--transform-figure': 'translateX(17px)',
+      '--walking-duration': '300',
+      '--transform-arm1': 'rotate(60deg)',  '--transform-wrist1': 'rotate(-15deg)',
+      '--transform-arm2': 'rotate(-45deg)', '--transform-wrist2': 'rotate(6deg)',
+      '--transform-leg1': 'rotate(-5deg)',  '--transform-calf1':  'rotate(10deg)',
+      '--transform-leg2': 'rotate(10deg)',  '--transform-calf2':  'rotate(-20deg)'
+    },
+    'falling1': {
+      '--figure-duration': '1600', '--walking-duration': '400',
+      '--transform-arm1': 'rotate(-60deg)',  '--transform-wrist1': 'none',
+      '--transform-arm2': 'rotate(30deg)',   '--transform-wrist2': 'rotate(120deg)',
+      '--transform-leg1': 'rotate(-30deg)',  '--transform-calf1':  'rotate(-20deg)',
+      '--transform-leg2': 'rotate(20deg)'
+    },
+    'falling2': {
+      '--walking-duration': '300',
+      '--transform-arm1': 'rotate(-100deg)', '--transform-arm2': 'rotate(-60deg)',
+      '--transform-wrist2': 'rotate(60deg)',
+      '--transform-leg1': 'rotate(80deg)',   '--transform-calf1': 'rotate(20deg)',
+      '--transform-leg2': 'rotate(-60deg)'
+    },
+    'falling3': {
+      '--walking-duration': '500',
+      '--transform-arm1': 'rotate(-30deg)',  '--transform-wrist1': 'rotate(40deg)',
+      '--transform-arm2': 'rotate(50deg)',   '--transform-wrist2': 'none',
+      '--transform-leg1': 'rotate(-30deg)',  '--transform-leg2':   'rotate(20deg)',
+      '--transform-calf2': 'none'
+    }
+  };
+
+  function setState(btn, key) {
+    if (!states[key]) return;
+    btn.state = key;
+    for (var prop in states[key]) btn.style.setProperty(prop, states[key][prop]);
+  }
+
+  function runLogoutAnimation(btn, onComplete) {
+    btn.classList.add('clicked');
+    setState(btn, 'walking1');
+    setTimeout(function () {
+      btn.classList.add('door-slammed');
+      setState(btn, 'walking2');
+      setTimeout(function () {
+        btn.classList.add('falling');
+        setState(btn, 'falling1');
+        setTimeout(function () {
+          setState(btn, 'falling2');
+          setTimeout(function () {
+            setState(btn, 'falling3');
+            setTimeout(onComplete, 1000);
+          }, states['falling2']['--walking-duration']);
+        }, states['falling1']['--walking-duration']);
+      }, states['walking2']['--figure-duration']);
+    }, states['walking1']['--figure-duration']);
+  }
+
+  function initLogoutBtn(id) {
+    var btn = document.getElementById(id);
+    if (!btn) return;
+    btn.state = 'default';
+
+    btn.addEventListener('mouseenter', function () {
+      if (btn.state === 'default') setState(btn, 'hover');
+    });
+    btn.addEventListener('mouseleave', function () {
+      if (btn.state === 'hover') setState(btn, 'default');
+    });
+    btn.addEventListener('click', function () {
+      if (btn.state !== 'default' && btn.state !== 'hover') return;
+      runLogoutAnimation(btn, function () {
+        if (typeof handleLogout === 'function') {
+          handleLogout(new Event('click'));
+        } else {
+          btn.classList.remove('clicked', 'door-slammed', 'falling');
+          setState(btn, 'default');
+        }
+      });
+    });
+  }
+
+  // Init both buttons — sidebar + dropdown
+  initLogoutBtn('logoutBtn');
+  initLogoutBtn('dropdownLogout');
+
+})();
+</script>
+
+</body>
+</html>

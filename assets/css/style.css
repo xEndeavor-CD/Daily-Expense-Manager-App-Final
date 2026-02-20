@@ -1,0 +1,529 @@
+/* =============================================================
+   DEMS – Daily Expense Management System
+   assets/css/style.css
+   ============================================================= */
+
+/* ── VARIABLES ──────────────────────────────────────────────── */
+:root {
+  --sb-width:   260px;
+  --primary:    #2563eb;
+  --danger:     #ef4444;
+  --success:    #22c55e;
+  --bg-app:     #f8fafc;
+  --bg-sidebar: #ffffff;
+  --border:     #e2e8f0;
+  --txt-main:   #1e293b;
+  --txt-muted:  #64748b;
+  --active-bg:  #eff6ff;
+  --active-cl:  #2563eb;
+  --radius:     14px;
+}
+
+*   { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
+/* ── LOGIN PAGE ─────────────────────────────────────────────── */
+.login-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef2ff;
+  padding: 1rem;
+}
+
+.login-wrapper {
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,.16);
+  max-width: 900px;
+  width: 100%;
+  min-height: 580px;
+  background: #fff;
+}
+
+.login-left {
+  background: #2563eb;
+  padding: 52px 44px;
+  width: 420px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-right {
+  flex: 1;
+  padding: 52px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Login brand */
+.login-brand       { display: flex; align-items: center; gap: 12px; }
+.login-brand-icon  {
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,.2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.15rem;
+}
+.login-brand-name  { font-size: 1.15rem; font-weight: 700; color: #fff; }
+
+/* Feature list */
+.feature-list { display: flex; flex-direction: column; gap: 28px; margin-top: auto; }
+.feature-item  { display: flex; gap: 16px; align-items: flex-start; }
+.feature-icon  {
+  width: 42px; height: 42px; flex-shrink: 0;
+  background: rgba(255,255,255,.15);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.1rem;
+}
+
+/* Demo box */
+.demo-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+/* ── APP LAYOUT ─────────────────────────────────────────────── */
+.app-bg     { background: var(--bg-app); min-height: 100vh; }
+.app-layout { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sb-width);
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 200;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 20px 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sb-icon {
+  width: 42px; height: 42px;
+  background: #eff6ff;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--primary); font-size: 1.15rem; flex-shrink: 0;
+}
+.sb-name { font-weight: 700; font-size: .97rem; color: var(--txt-main); }
+.sb-sub  { font-size: .72rem; color: var(--txt-muted); margin-top: 2px; }
+
+.sidebar-nav {
+  flex: 1;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: #475569;
+  text-decoration: none;
+  font-size: .92rem;
+  font-weight: 500;
+  transition: background .15s, color .15s;
+  cursor: pointer;
+}
+.nav-item i          { font-size: 1.05rem; width: 20px; text-align: center; }
+.nav-item:hover      { background: #f1f5f9; color: var(--txt-main); }
+.nav-item.active     { background: var(--active-bg); color: var(--active-cl); font-weight: 600; }
+.logout-item:hover   { background: #fef2f2; color: var(--danger); }
+
+.sidebar-footer {
+  padding: 12px;
+  border-top: 1px solid var(--border);
+}
+.sb-copy { font-size: .7rem; color: var(--txt-muted); padding: 6px 14px 2px; }
+
+/* ── MAIN CONTENT ───────────────────────────────────────────── */
+.main-content { margin-left: var(--sb-width); flex: 1; min-height: 100vh; }
+
+.page-header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 30px 36px 22px;
+  overflow: visible;
+}
+.page-title { font-size: 1.75rem; font-weight: 700; color: var(--txt-main); }
+.page-sub   { font-size: .88rem; color: var(--txt-muted); margin-top: 4px; }
+
+.content-pad { padding: 28px 36px 40px; }
+
+/* ── STAT CARDS ─────────────────────────────────────────────── */
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.stat-lbl { font-size: .8rem; font-weight: 600; color: var(--txt-muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; }
+.stat-val { font-size: 1.6rem; font-weight: 700; color: var(--txt-main); }
+.stat-ico {
+  width: 50px; height: 50px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+}
+
+/* ── CARD PANELS ────────────────────────────────────────────── */
+.card-panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+}
+.panel-title { font-weight: 700; font-size: .97rem; color: var(--txt-main); }
+
+/* ── CHART ──────────────────────────────────────────────────── */
+.chart-wrap { position: relative; height: 300px; }
+
+/* ── RECENT TRANSACTIONS ────────────────────────────────────── */
+.tx-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+.tx-row:last-child { border-bottom: none; }
+.tx-name   { font-weight: 600; font-size: .92rem; color: var(--txt-main); }
+.tx-meta   { font-size: .78rem; color: var(--txt-muted); margin-top: 3px; }
+.tx-amount { font-weight: 700; color: var(--danger); font-size: .92rem; white-space: nowrap; margin-left: 16px; }
+
+/* ── CATEGORY BADGE ─────────────────────────────────────────── */
+.cat-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: .76rem;
+  font-weight: 600;
+}
+
+/* ── EXPENSE TABLE ──────────────────────────────────────────── */
+.exp-table { font-size: .88rem; }
+
+.exp-table thead th {
+  font-weight: 600;
+  font-size: .75rem;
+  color: var(--txt-muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border-bottom: 2px solid var(--border);
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.exp-table tbody td {
+  padding: 14px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.exp-table tbody tr:hover { background: #f8fafc; }
+.amount-red { color: var(--danger); font-weight: 700; }
+
+.act-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  line-height: 1;
+  transition: background .15s;
+}
+.act-btn.edit     { color: #64748b; }
+.act-btn.edit:hover { background: #f1f5f9; color: var(--txt-main); }
+.act-btn.del      { color: var(--danger); }
+.act-btn.del:hover  { background: #fef2f2; }
+
+/* ── SEARCH ─────────────────────────────────────────────────── */
+.search-wrap { position: relative; min-width: 270px; }
+.search-ico  {
+  position: absolute; left: 14px; top: 50%;
+  transform: translateY(-50%); color: var(--txt-muted); font-size: .9rem;
+  pointer-events: none;
+}
+.search-wrap .form-control { padding-left: 40px; }
+
+/* ── SETTINGS ───────────────────────────────────────────────── */
+.set-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.set-toggle { width: 46px !important; height: 24px !important; cursor: pointer; }
+
+.danger-row {
+  background: #fff5f5;
+  border: 1px solid #fecaca !important;
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+/* ── MONTHLY BARS ────────────────────────────────────────────── */
+.month-row   { margin-bottom: 20px; }
+.month-label { display: flex; justify-content: space-between; font-size: .85rem; font-weight: 600; margin-bottom: 6px; color: var(--txt-main); }
+.month-bar   { height: 8px; border-radius: 4px; background: #e2e8f0; overflow: hidden; }
+.month-fill  { height: 100%; border-radius: 4px; background: var(--primary); transition: width .6s ease; }
+
+/* ── ALERTS ─────────────────────────────────────────────────── */
+.alert { border-radius: 10px; font-size: .87rem; }
+
+/* ── SCROLLBAR ───────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .main-content { margin-left: 0; }
+  .sidebar      { display: none; }
+  .content-pad  { padding: 20px 16px; }
+  .page-header  { padding: 20px 16px; }
+}
+
+@media (max-width: 640px) {
+  .login-left  { display: none; }
+  .login-right { padding: 36px 24px; }
+  .login-wrapper { max-width: 440px; }
+}
+
+
+/* =============================================================
+   DASHBOARD – PROFILE DROPDOWN
+   Only used on dashboard.html. Appended here to keep all CSS
+   in one file without touching any existing rules above.
+   ============================================================= */
+
+/* ── Page header inner: flex so profile btn sits on the right ── */
+.page-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ── Profile trigger button ─────────────────────────────────── */
+.profile-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 6px 14px 6px 6px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+}
+.profile-btn:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+/* Blue avatar circle */
+.profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: .03em;
+}
+
+.profile-name {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--txt-main);
+  white-space: nowrap;
+}
+
+.profile-chevron {
+  font-size: .75rem;
+  color: var(--txt-muted);
+  transition: transform .2s ease;
+}
+.pd-chevron-open {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown panel ─────────────────────────────────────────── */
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.15);
+  z-index: 9999;
+  /* overflow:hidden removed — it was clipping the dropdown content */
+  overflow: visible;
+
+  /* hard-hidden — opacity alone doesn't remove from document flow */
+  display: none;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+  transition: opacity .18s ease, transform .18s ease;
+}
+/* Step 1: block in DOM but still invisible */
+.profile-dropdown.pd-visible {
+  display: block;
+}
+/* Step 2: animate in on next frame */
+.profile-dropdown.pd-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ── Dropdown header (user info) ────────────────────────────── */
+.pd-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 16px 14px;
+}
+
+.pd-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pd-name {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--txt-main);
+  line-height: 1.2;
+}
+.pd-email {
+  font-size: .75rem;
+  color: var(--txt-muted);
+  margin-top: 2px;
+  word-break: break-all;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.pd-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+
+/* ── Regular dropdown items ─────────────────────────────────── */
+.pd-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--txt-main);
+  text-decoration: none;
+  transition: background .12s;
+  cursor: pointer;
+}
+.pd-item i {
+  font-size: 1rem;
+  width: 18px;
+  text-align: center;
+  color: var(--txt-muted);
+  flex-shrink: 0;
+}
+.pd-item:hover {
+  background: #f8fafc;
+}
+/* ── Edit Profile highlighted item ─────────────────────────── */
+.pd-item-edit {
+  color: var(--primary);
+  font-weight: 600;
+  background: #eff6ff;
+  border-left: 3px solid var(--primary);
+}
+.pd-item-edit:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+
+/* ── Logout button inside dropdown ──────────────────────────── */
+.pd-logout-wrap {
+  padding: 6px 8px 8px;
+}
+
+/* Override logoutButton styles specifically for the dropdown context.
+   Higher specificity (.pd-logout-wrap button.logoutButton) beats
+   the base button.logoutButton rule in logout-button.css           */
+.pd-logout-wrap button.logoutButton {
+  width: 100%;
+  padding: 10px 46px 10px 16px; /* right pad = room for SVG door */
+  border-radius: 8px;
+  font-size: .88rem;
+  color: var(--danger);
+}
+.pd-logout-wrap button.logoutButton .button-text {
+  color: var(--danger);
+  margin-left: 0;
+  margin-right: 0;
+}
+.pd-logout-wrap button.logoutButton:hover {
+  background: #fef2f2;
+}
+/* Scale the SVG icons down slightly to fit the dropdown row height */
+.pd-logout-wrap button.logoutButton .figure,
+.pd-logout-wrap button.logoutButton .door,
+.pd-logout-wrap button.logoutButton .doorway {
+  width: 26px;
+  bottom: 3px;
+  right: 10px;
+}
+.pd-logout-wrap button.logoutButton .figure {
+  right: 16px;
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>ExpenseTracker – Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+
+  <style>
+    /* ── Panel slide ── */
+    .login-wrapper {
+      overflow: hidden;
+    }
+
+    .login-left,
+    .login-right {
+      transition: transform 0.55s cubic-bezier(0.77, 0, 0.175, 1),
+                  border-radius 0.55s cubic-bezier(0.77, 0, 0.175, 1),
+                  box-shadow 0.55s ease;
+      will-change: transform;
+    }
+
+    .login-wrapper.panel-switched .login-left {
+      transform: translateX(var(--right-panel-width));
+      border-radius: 0 1.5rem 1.5rem 0;
+      box-shadow: -8px 0 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .login-wrapper.panel-switched .login-right {
+      transform: translateX(calc(-1 * var(--left-panel-width)));
+    }
+
+    /* ── Content visibility ── */
+    .login-left > *,
+    .login-right > * {
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    /* Fade OUT — instant hide, no direction needed */
+    .login-wrapper.contents-hidden .login-left > *,
+    .login-wrapper.contents-hidden .login-right > * {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /*
+      Directional reveal — content starts offset in the OPPOSITE direction
+      of the panel travel, then transitions to its natural position (0).
+
+      Panel went RIGHT (→) → content appears to come from the RIGHT (←)
+      So starting offset is positive X (pushed right), animates to 0.
+    */
+    .login-wrapper.reveal-from-right .login-left > *,
+    .login-wrapper.reveal-from-right .login-right > * {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+
+    /* Panel went LEFT (←) → content appears to come from the LEFT (→) */
+    .login-wrapper.reveal-from-left .login-left > *,
+    .login-wrapper.reveal-from-left .login-right > * {
+      opacity: 0;
+      transform: translateX(-28px);
+    }
+  </style>
+</head>
+<body class="login-bg">
+
+<div class="login-wrapper" id="loginWrapper">
+
+  <!-- ── LEFT BLUE PANEL ───────────────────────────────── -->
+  <div class="login-left" id="bluePanel">
+    <div class="login-brand mb-5">
+      <div class="login-brand-icon"><i class="bi bi-wallet2"></i></div>
+      <span class="login-brand-name">ExpenseTracker</span>
+    </div>
+
+    <h2 class="fw-bold text-white mb-3 lh-sm">Daily Expense<br/>Management System</h2>
+    <p class="text-white-50 mb-5">Track and manage your daily expenses efficiently</p>
+
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feature-icon"><i class="bi bi-graph-down-arrow"></i></div>
+        <div>
+          <div class="fw-semibold text-white">Track Expenses</div>
+          <div class="text-white-50 small">Monitor your daily spending patterns and stay on budget</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="bi bi-pie-chart-fill"></i></div>
+        <div>
+          <div class="fw-semibold text-white">Visual Reports</div>
+          <div class="text-white-50 small">Analyze spending with detailed charts and insights</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="bi bi-bar-chart-fill"></i></div>
+        <div>
+          <div class="fw-semibold text-white">Smart Categories</div>
+          <div class="text-white-50 small">Organize expenses by category for better control</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-white-50 small mt-auto pt-5">© 2026 ExpenseTracker. All rights reserved.</p>
+  </div>
+
+  <!-- ── RIGHT WHITE PANEL ─────────────────────────────── -->
+  <div class="login-right" id="whitePanel">
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <h3 class="fw-bold mb-1" style="font-size:1.8rem;">Welcome back</h3>
+      <p class="text-muted mb-4">Please enter your credentials to continue</p>
+
+      <div id="loginAlert" class="alert d-none" role="alert"></div>
+
+      <div class="mb-3">
+        <label class="form-label fw-medium">Email address</label>
+        <input type="email" id="loginEmail" class="form-control form-control-lg rounded-3 bg-light border-0"
+               placeholder="Enter your email"/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-medium">Password</label>
+        <div class="input-group">
+          <input type="password" id="loginPassword"
+                 class="form-control form-control-lg rounded-start-3 bg-light border-0"
+                 placeholder="Enter your password"/>
+          <button class="btn bg-light border-0 rounded-end-3 px-3"
+                  type="button" onclick="togglePwd('loginPassword',this)">
+            <i class="bi bi-eye text-muted"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="rememberMe"/>
+          <label class="form-check-label text-muted small" for="rememberMe">Remember me</label>
+        </div>
+        <a href="#" class="text-primary small text-decoration-none">Forgot password?</a>
+      </div>
+
+      <button class="btn btn-dark btn-lg w-100 rounded-3 fw-semibold mb-3"
+              onclick="handleLogin()">Sign in</button>
+
+      <p class="text-center text-muted small mb-4">
+        Don't have an account?
+        <a href="#" class="text-primary fw-semibold text-decoration-none"
+           onclick="switchForm('register')">Create an account</a>
+      </p>
+
+      <div class="demo-box">
+        <div class="fw-semibold text-primary small mb-1">Demo Access:</div>
+        <div class="text-primary small">
+          Email: <strong>john@example.com</strong> &nbsp;|&nbsp; Password: <strong>demo1234</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" class="d-none">
+      <h3 class="fw-bold mb-1" style="font-size:1.8rem;">Create an account</h3>
+      <p class="text-muted mb-4">Start tracking your expenses today</p>
+
+      <div id="registerAlert" class="alert d-none" role="alert"></div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <label class="form-label fw-medium">First Name</label>
+          <input type="text" id="regFirst" class="form-control bg-light border-0 rounded-3" placeholder="John"/>
+        </div>
+        <div class="col-6">
+          <label class="form-label fw-medium">Last Name</label>
+          <input type="text" id="regLast" class="form-control bg-light border-0 rounded-3" placeholder="Doe"/>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-medium">Email address</label>
+        <input type="email" id="regEmail" class="form-control bg-light border-0 rounded-3"
+               placeholder="john@example.com"/>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-medium">Password</label>
+        <input type="password" id="regPassword" class="form-control bg-light border-0 rounded-3"
+               placeholder="Minimum 6 characters"/>
+      </div>
+
+      <button class="btn btn-dark btn-lg w-100 rounded-3 fw-semibold mb-3"
+              onclick="handleRegister()">Create Account</button>
+
+      <p class="text-center text-muted small">
+        Already have an account?
+        <a href="#" class="text-primary fw-semibold text-decoration-none"
+           onclick="switchForm('login')">Sign in</a>
+      </p>
+    </div>
+
+  </div><!-- /login-right -->
+</div><!-- /login-wrapper -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/auth.js"></script>
+
+<script>
+(function () {
+  var SLIDE_MS = 550; // panel slide  — matches CSS above
+  var FADE_OUT = 180; // content fade-out before slide starts
+  var FADE_IN  = 180; // content fade-in after slide ends (matches CSS transition)
+
+  var isSwitched  = false;
+  var isAnimating = false;
+
+  function updateCSSWidths() {
+    var wrapper    = document.getElementById('loginWrapper');
+    var bluePanel  = document.getElementById('bluePanel');
+    var whitePanel = document.getElementById('whitePanel');
+    wrapper.style.setProperty('--left-panel-width',  bluePanel.offsetWidth  + 'px');
+    wrapper.style.setProperty('--right-panel-width', whitePanel.offsetWidth + 'px');
+  }
+
+  function swapForms(target) {
+    var loginForm    = document.getElementById('loginForm');
+    var registerForm = document.getElementById('registerForm');
+    if (target === 'register') {
+      loginForm.classList.add('d-none');
+      registerForm.classList.remove('d-none');
+    } else {
+      registerForm.classList.add('d-none');
+      loginForm.classList.remove('d-none');
+    }
+  }
+
+  window.switchForm = function (target) {
+    if (isAnimating) return;
+    if (target === 'register' && isSwitched)  return;
+    if (target === 'login'    && !isSwitched) return;
+
+    isAnimating = true;
+    var wrapper   = document.getElementById('loginWrapper');
+    var goingRight = target === 'register'; // blue panel direction
+    updateCSSWidths();
+
+    // ── Step 1: fade content OUT (no direction class yet) ──
+    wrapper.classList.add('contents-hidden');
+
+    setTimeout(function () {
+
+      // ── Step 2: swap forms + slide panels (contents invisible) ──
+      swapForms(target);
+
+      if (goingRight) {
+        wrapper.classList.add('panel-switched');
+        isSwitched = true;
+      } else {
+        wrapper.classList.remove('panel-switched');
+        isSwitched = false;
+      }
+
+      // ── Step 3: after slide finishes, set directional start position ──
+      setTimeout(function () {
+
+        // Remove the plain hide, apply the directional offset instead.
+        // Content is still invisible (opacity:0) but now offset in the
+        // direction we want it to arrive FROM.
+        wrapper.classList.remove('contents-hidden');
+        wrapper.classList.add(goingRight ? 'reveal-from-right' : 'reveal-from-left');
+
+        // Force reflow so the browser registers the offset before we clear it
+        void wrapper.offsetHeight;
+
+        // ── Step 4: clear offset → CSS transition carries content to 0 ──
+        wrapper.classList.remove('reveal-from-right', 'reveal-from-left');
+
+        // Unlock after fade-in finishes
+        setTimeout(function () {
+          isAnimating = false;
+        }, FADE_IN);
+
+      }, SLIDE_MS);
+
+    }, FADE_OUT);
+  };
+
+  window.addEventListener('resize', function () {
+    if (isSwitched) updateCSSWidths();
+  });
+})();
+</script>
+</body>
+</html>
