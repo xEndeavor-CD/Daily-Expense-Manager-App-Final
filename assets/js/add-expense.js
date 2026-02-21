@@ -1,5 +1,4 @@
 // assets/js/add-expense.js
-// showAlert() is already in api.js — do NOT redefine it here
 
 async function initAddExpense() {
   const today = new Date().toISOString().split('T')[0];
@@ -26,22 +25,29 @@ async function saveExpense() {
   const description = document.getElementById('description').value.trim();
 
   if (isNaN(amount) || amount <= 0) {
-    showAlert('formAlert', 'Please enter a valid amount greater than 0.'); return;
+    showAlert('formAlert', 'Please enter a valid amount greater than 0.', 'danger'); return;
   }
   if (!category_id) {
-    showAlert('formAlert', 'Please select a category.'); return;
+    showAlert('formAlert', 'Please select a category.', 'danger'); return;
   }
   if (!date) {
-    showAlert('formAlert', 'Please select a date.'); return;
+    showAlert('formAlert', 'Please select a date.', 'danger'); return;
   }
 
   const r = await API.addExpense({ amount, category_id, date, description });
 
   if (r.success) {
-    showAlert('formAlert', '✓ Expense saved successfully!', 'success');
+    const el = document.getElementById('formAlert');
+    if (el) {
+      el.className   = 'alert alert-success rounded-3';
+      el.textContent = '✓ Expense saved successfully!';
+      el.classList.remove('d-none');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => el.classList.add('d-none'), 5000);
+    }
     clearForm();
   } else {
-    showAlert('formAlert', r.message || 'Failed to save expense.');
+    showAlert('formAlert', r.message || 'Failed to save expense.', 'danger');
   }
 }
 
@@ -50,9 +56,6 @@ function clearForm() {
   document.getElementById('category').value    = '';
   document.getElementById('description').value = '';
   document.getElementById('expDate').value     = new Date().toISOString().split('T')[0];
-
-  const el = document.getElementById('formAlert');
-  if (el) el.classList.add('d-none');
 }
 
 document.addEventListener('DOMContentLoaded', initAddExpense);
