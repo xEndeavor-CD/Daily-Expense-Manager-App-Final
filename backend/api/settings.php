@@ -7,26 +7,6 @@ require_once '../config/database.php';
 
 requireLogin();
 
-$method = $_SERVER['REQUEST_METHOD'];
-$action = $_GET['action'] ?? '';
-
-try {
-switch ($action) {
-    case 'profile':
-        if ($method === 'GET')  getProfile();
-        if ($method === 'POST') updateProfile();
-        break;
-    case 'password':      updatePassword();      break;
-    case 'notifications':
-        if ($method === 'GET')  getNotifications();
-        if ($method === 'POST') updateNotifications();
-        break;
-    case 'export':  exportCSV();       break;
-    case 'delete':  deleteAccount();   break;
-    default:
-        echo json_encode(['success' => false, 'message' => 'Invalid action']);
-}
-
 // ── GET PROFILE ──────────────────────────────────────────────
 function getProfile() {
     $uid  = getCurrentUserId();
@@ -124,7 +104,7 @@ function updateNotifications() {
     $data   = json_decode(file_get_contents('php://input'), true);
     $email  = intval($data['email_notifications'] ?? 0);
     $daily  = intval($data['daily_summary']       ?? 0);
-    $budget = intval($data['budget_alerts']       ?? 0);
+    $budget = intval($data['budget_alerts']        ?? 0);
 
     $conn = getDBConnection();
     $stmt = $conn->prepare(
@@ -175,6 +155,32 @@ function deleteAccount() {
     $conn->close();
 }
 
+// ── ROUTER ───────────────────────────────────────────────────
+$method = $_SERVER['REQUEST_METHOD'];
+$action = $_GET['action'] ?? '';
+
+try {
+    switch ($action) {
+        case 'profile':
+            if ($method === 'GET')  getProfile();
+            if ($method === 'POST') updateProfile();
+            break;
+        case 'password':
+            updatePassword();
+            break;
+        case 'notifications':
+            if ($method === 'GET')  getNotifications();
+            if ($method === 'POST') updateNotifications();
+            break;
+        case 'export':
+            exportCSV();
+            break;
+        case 'delete':
+            deleteAccount();
+            break;
+        default:
+            echo json_encode(['success' => false, 'message' => 'Invalid action']);
+    }
 } catch (Throwable $e) {
     http_response_code(500);
     echo json_encode([

@@ -14,27 +14,30 @@ async function loadProfile() {
     document.getElementById('profileEmail').value = r.data.email      || '';
   }
 }
+
 function previewAvatar(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(ev) {
-      const preview = document.getElementById('avatarPreview');
-      preview.innerHTML = `<img src="${ev.target.result}" alt="Profile"/>`;
-    };
-    reader.readAsDataURL(file);
-  }
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const preview = document.getElementById('avatarPreview');
+    preview.innerHTML = `<img src="${ev.target.result}" alt="Profile"/>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
 async function saveProfile() {
   const first_name = document.getElementById('firstName').value.trim();
   const last_name  = document.getElementById('lastName').value.trim();
   const email      = document.getElementById('profileEmail').value.trim();
-  const preview    = document.getElementById("avatarInput").value.trim();
 
   if (!first_name || !last_name || !email) {
     showAlert('profileAlert', 'All profile fields are required.'); return;
@@ -64,7 +67,7 @@ async function updatePassword() {
   const r = await API.updatePassword({ current_password, new_password, confirm_password });
   if (r.success) {
     showAlert('passwordAlert', '✓ Password updated successfully!', 'success');
-    ['currentPwd','newPwd','confirmPwd'].forEach(id => document.getElementById(id).value = '');
+    ['currentPwd', 'newPwd', 'confirmPwd'].forEach(id => document.getElementById(id).value = '');
   } else {
     showAlert('passwordAlert', r.message || 'Password update failed.');
   }
@@ -91,18 +94,24 @@ async function saveNotifications() {
 
 // ── Export CSV ────────────────────────────────────────────────────
 async function exportCSV() {
-  const r = await API.exportData();
-  if (!r.success || !r.data.length) { alert('No expense data to export.'); return; }
+  // Support both API method name conventions
+  const exportFn = API.exportData || API.exportCSV;
+  if (!exportFn) { alert('Export function not available.'); return; }
+
+  const r = await exportFn.call(API);
+  if (!r.success || !r.data || !r.data.length) {
+    alert('No expense data to export.'); return;
+  }
 
   const header = 'Date,Description,Category,Amount';
   const rows   = r.data.map(x =>
-    `${x.date},"${(x.description||'').replace(/"/g,'""')}",${x.category},${x.amount}`
+    `${x.date},"${(x.description || '').replace(/"/g, '""')}",${x.category},${x.amount}`
   );
-  const csv    = [header, ...rows].join('\n');
-  const blob   = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url    = URL.createObjectURL(blob);
-  const a      = Object.assign(document.createElement('a'), {
-    href: url, download: `expenses_${new Date().toISOString().slice(0,10)}.csv`
+  const csv  = [header, ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), {
+    href: url, download: `expenses_${new Date().toISOString().slice(0, 10)}.csv`
   });
   document.body.appendChild(a);
   a.click();
