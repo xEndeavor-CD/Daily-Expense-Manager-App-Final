@@ -1,5 +1,5 @@
 // assets/js/reports.js
-// ── Reports page: summary cards + daily bar + category pie + monthly bars ──
+// ── Reports page: summary cards + daily bar + category doughnut + monthly bars ──
 
 const COLORS = ['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#84cc16','#6b7280'];
 
@@ -30,7 +30,7 @@ async function loadReports() {
   }
 
   buildBar(labels, vals);
-  buildPie(d.categories);
+  buildDoughnut(d.categories);
   buildMonthly(d.monthly);
 }
 
@@ -75,8 +75,8 @@ function buildBar(labels, data) {
   });
 }
 
-// ── Category Pie Chart ───────────────────────────────────────────
-function buildPie(cats) {
+// ── Category Doughnut Chart ──────────────────────────────────────
+function buildDoughnut(cats) {
   const ctx = document.getElementById('reportPieChart');
   if (!ctx) return;
   if (pieChart) pieChart.destroy();
@@ -92,23 +92,60 @@ function buildPie(cats) {
   const vals   = cats.map(c => parseFloat(c.total));
   const colors = cats.map((c, i) => c.color || COLORS[i % COLORS.length]);
 
-  pieChart  = new Chart(ctx, {
-    type: 'pie',
+  // Custom plugin: total label in centre
+  const centerTextPlugin = {
+    id: 'centerText',
+    afterDraw(chart) {
+      const { ctx: c, chartArea: { top, bottom, left, right } } = chart;
+      const cx = (left + right) / 2;
+      const cy = (top + bottom) / 2;
+      c.save();
+      c.textAlign    = 'center';
+      c.textBaseline = 'middle';
+      c.fillStyle    = '#1e293b';
+      c.font         = 'bold 15px Inter, sans-serif';
+      c.fillText('Total', cx, cy - 10);
+      c.font      = 'bold 18px Inter, sans-serif';
+      c.fillStyle = '#3b82f6';
+      c.fillText(fmt$(total), cx, cy + 12);
+      c.restore();
+    }
+  };
+
+  pieChart = new Chart(ctx, {
+    type: 'doughnut',
     data: {
       labels,
-      datasets: [{ data: vals, backgroundColor: colors, borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }]
+      datasets: [{
+        data: vals,
+        backgroundColor: colors,
+        borderWidth: 2,
+        borderColor: '#fff',
+        hoverOffset: 8
+      }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      cutout: '62%',
       plugins: {
         legend: {
           position: 'right',
-          labels: { font: { size: 11 }, padding: 12, usePointStyle: true, pointStyleWidth: 10 }
+          labels: {
+            font: { size: 11 },
+            padding: 12,
+            usePointStyle: true,
+            pointStyleWidth: 10
+          }
         },
-        tooltip: { callbacks: { label: c => ` ${fmt$(c.raw)}` } }
+        tooltip: {
+          callbacks: {
+            label: c => ` ${fmt$(c.raw)}  (${total > 0 ? Math.round(c.raw / total * 100) : 0}%)`
+          }
+        }
       }
-    }
+    },
+    plugins: [centerTextPlugin]
   });
 }
 
